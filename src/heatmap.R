@@ -21,14 +21,23 @@ drug_plot_clustered <- drug_con %>%
   gather("drug2","overlap", -drug1) %>%
   mutate(Dataset = 1,
          drug1 = factor(drug1, levels = hc_order),
-         drug2 = factor(drug2, levels = hc_order)) 
+         drug2 = factor(drug2, levels = hc_order))
+
+drug_plot <- drug_con %>%
+  gather("drug2","overlap", -drug1) %>%
+  mutate(Dataset = 1)
 
 p <- ggplot(drug_plot, aes(x=drug1, y = drug2, fill = overlap)) +
   geom_tile() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        axis.text.x = element_text(angle = 90))
+        axis.text.x = element_text(angle = 90)) +
+  xlab("") +
+  ylab("")
+p
+
 p <- ggplotly(p)
+p
  
- htmlwidgets::saveWidget(p, "heatmap.html")
+htmlwidgets::saveWidget(p, "heatmap.html")
  
